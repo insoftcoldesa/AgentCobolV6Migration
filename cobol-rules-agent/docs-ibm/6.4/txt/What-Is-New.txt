@@ -1,0 +1,651 @@
+Enterprise COBOL for z/OS
+6.4
+
+
+
+
+What's New
+
+
+
+
+IBM
+
+
+
+
+SC31-5708-00
+      Note
+      Before using this information and the product it supports, be sure to read the general information under
+      “Notices” on page 11.
+
+
+
+
+Second edition (28 April 2026 update)
+This edition applies to Version 6.4 of IBM® Enterprise COBOL for z/OS® (program number 5655-EC6) and to all
+subsequent releases and modifications until otherwise indicated in new editions. Make sure that you are using the
+correct edition for the level of the product.
+You can view or download softcopy publications free of charge in the Enterprise COBOL for z/OS library. Because
+Enterprise COBOL for z/OS supports the continuous delivery (CD) model and publications are updated to document the
+features delivered under the CD model, it is a good idea to check for updates once every two months.
+It is our intention to update the product documentation for this release periodically, without updating the order number.
+If you need to uniquely refer to the version of your product documentation, refer to the order number with the date of
+update.
+© Copyright International Business Machines Corporation 2022, 2026.
+US Government Users Restricted Rights – Use, duplication or disclosure restricted by GSA ADP Schedule Contract with
+IBM Corp.
+Contents
+
+
+  About this information........................................................................................... v
+
+  How to send your comments.................................................................................vii
+
+  Chapter 1. Video: What is new in Enterprise COBOL for z/OS 6.4............................. 1
+
+  Chapter 2. What is new in Enterprise COBOL for z/OS 6.4 and COBOL 6.4 with
+    PTFs installed.................................................................................................... 3
+
+  Notices................................................................................................................11
+     Trademarks................................................................................................................................................ 13
+  Enterprise COBOL for z/OS publications............................................................... 15
+
+  Index.................................................................................................................. 17
+
+
+
+
+                                                                                                                                                               iii
+iv
+About this information
+      This information provides an executive overview of new and improved features in Enterprise COBOL for
+      z/OS 6.3 and Enterprise COBOL for z/OS 6.3 with PTFs installed.
+      Throughout this information, "COBOL" or "Enterprise COBOL" means "IBM Enterprise COBOL for z/OS".
+
+
+
+
+© Copyright IBM Corp. 2022, 2026                                                                             v
+vi Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+How to send your comments
+      Your feedback is important in helping us to provide accurate, high-quality information. If you have
+      comments about this information or any other Enterprise COBOL documentation, send your comments to:
+      compinfo@cn.ibm.com.
+      Be sure to include the name of the document, the publication number, the version of Enterprise COBOL,
+      and, if applicable, the specific location (for example, the page number or section heading) of the text that
+      you are commenting on.
+      When you send information to IBM, you grant IBM a nonexclusive right to use or distribute the information
+      in any way that IBM believes appropriate without incurring any obligation to you.
+
+
+
+
+© Copyright IBM Corp. 2022, 2026                                                                                vii
+viii Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+Chapter 1. Video: What is new in Enterprise COBOL
+for z/OS 6.4
+
+      Watch the video to get a quick overview of the major new features and enhancements in Enterprise
+      COBOL for z/OS 6.4.
+      To discover all the new features and enhancements, refer to the complete list in Chapter 2, “What is new
+      in Enterprise COBOL for z/OS 6.4 and COBOL 6.4 with PTFs installed,” on page 3.
+      To watch more Enterprise COBOL for z/OS videos, visit the COBOL video gallery.
+
+
+
+
+© Copyright IBM Corp. 2022, 2026                                                                                 1
+2 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+Chapter 2. What is new in Enterprise COBOL for z/OS
+6.4 and COBOL 6.4 with PTFs installed
+
+      This section lists new and improved features in Enterprise COBOL for z/OS 6.4 and Enterprise COBOL for
+      z/OS 6.4 with PTFs installed.
+      Enterprise COBOL for z/OS supports the continuous delivery (CD) model so that you can receive new
+      features and enhanced capabilities as soon as the code is ready without waiting for the next release. The
+      below feature descriptions that begin with an APAR number are introduced in the PTFs that are shipped
+      with Enterprise COBOL for z/OS 6.4. Install the latest PTFs using the FIXCAT feature of SMP/E to take
+      advantage of these features. For more information on SMP/E FIXCATs, see Determining service required.
+      For more information on PTFs and APARs for Enterprise COBOL for z/OS, see the COBOL for z/OS support
+      page.
+      The enhancements that are described in this section also have an associated cross-reference to the
+      COBOL publications for your convenience.
+      The changes mainly fall into the following categories:
+      • “Improved COBOL/Java interoperability” on page 4
+           Non-OO COBOL/Java™ interoperability support
+           New JAVAIOP option
+           New JAVA-CALLABLE directive
+           New JAVA-SHAREABLE directive
+           Enhanced CALL statement
+           Enhanced cjbuild utility
+      • “Interoperability between AMODE 31 (31-bit) and AMODE 64 (64-bit) COBOL programs” on page 5
+      • “User-defined functions support” on page 5
+           Function IDENTIFICATION DIVISION
+           User-defined function configuration section
+           Function procedure division
+           New CONTENT-OF intrinsic function
+           Using user-defined functions
+      • “Function prototypes support” on page 6
+           Function IDENTIFICATION DIVISION
+           Function procedure division
+           Using function prototypes
+      • “Enhanced UTF-8 support” on page 6
+      • “JSON enhancements” on page 6
+           ENCODING phrase
+           Anonymous array support
+           JSON null values support
+      • “Improved integration with IBM Automatic Binary Optimizer for z/OS (ABO)” on page 7
+      • “Compiler option changes” on page 7
+       – New: SMARTBIN, JAVAIOP, LSACHECK
+       – Changed: ARCH, RULES, TUNE
+      • “Runtime changes” on page 8
+
+
+© Copyright IBM Corp. 2022, 2026                                                                               3
+        – PERFORM … UNTIL EXIT support
+        – VSAM dynamic access optional logic path
+        – New runtime options
+        – Dynamic storage allocation
+      • “Debugging enhancement” on page 8
+      • “Usability enhancement” on page 8
+      • Compiler message changes
+        – New: IGYCB7035-S, IGYCB7155-U, IGYCB7301-W, IGYCB7302-W, IGYCB7305-U, IGYCB7319-S
+        – Changed: IGYCB7314-E
+
+      Improved COBOL/Java interoperability
+
+      The COBOL/Java interoperability is enhanced to extend the capabilities of your COBOL applications with
+      Java and removes the need to write object-oriented (OO) COBOL. The following changes are introduced to
+      facilitate COBOL applications interoperating with Java:
+      Non-OO COBOL/Java interoperability support
+         Enterprise COBOL supports a more comprehensive and flexible form of Java interoperability than that
+         provided by the object-oriented (OO) COBOL framework. (COBOL/Java interoperability outside of the
+         object-oriented (OO) COBOL framework)
+      New JAVAIOP option
+        The JAVAIOP option controls the behavior of COBOL programs that interoperate with Java through
+        the JAVA-CALLABLE or JAVA-SHAREABLE directives or by calling Java static methods using the
+        CALL statement. (JAVAIOP)
+      New JAVA-CALLABLE directive
+        The JAVA-CALLABLE directive instructs the compiler to make the COBOL program automatically
+        callable from Java. The directive must appear before the PROCEDURE DIVISION header for the
+        outermost program of a compilation unit. (JAVA-CALLABLE)
+      New JAVA-SHAREABLE directive
+        You can use the JAVA-SHAREABLE ON and JAVA-SHAREABLE OFF directives to bracket one or more
+        WORKING-STORAGE data items to indicate that they are to be made read/write accessible from Java
+        applications interoperating with this COBOL program. (JAVA-SHAREABLE)
+      Enhanced CALL statement
+         The CALL statement is enhanced to enable the compiler to call a static Java method. A Java call
+         stub program that is automatically generated and serves as an interface between the COBOL calling
+         program and the static Java method. (CALL statement)
+      PH48453: New sample files demonstrating a COBOL/Java interoperable application and how to build
+      it are provided in the demo subdirectory of the COBOL install directory in the z/OS UNIX file system.
+      (Example: COBPROD application)
+      PH49715: A new cjbuild command reference section is added to address various usability and stability
+      issues relating to the non-OO Java/COBOL interoperability. ()cjbuild command reference
+      PH51752: A new sample JCL is provided to demonstrate how a non-OO COBOL/Java interoperable
+      application can be built and run entirely using JCL. ()Sample JCL for building and running the COBPROD
+      application
+      PH53631: Enhanced the ON EXCEPTION phrase support to deal with exceptions in the non-OO COBOL/
+      Java interoperability framework. ()Handling errors in Java-interoperable COBOL applications
+      Enhanced cjbuild utility
+         The cjbuild utility in the COBOL/Java interoperability framework is simplified and improved. A
+         "methods" file is not longer required. You can process all files in the COBOL artifact directory or
+
+
+
+4 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+   just specify COBOL programs directly with the new -i/--progid option on the cjbuild command line.
+   (cjbuild command reference)
+PH61700: The cjbuild utility is enhanced to allow users to specify the names of COBOL programs in the
+command line and process all files in the COBOL artifact directory. (Example: COBRPOD application -
+building and running)
+Support for IBM Semeru Java 25 on z/OS
+   Enterprise COBOL supports IBM Semeru Java 25 for z/OS, enabling COBOL applications that
+   interoperate with Java to take advantage of the latest Java SE LTS performance, security, and platform
+   enhancements on IBM Z. This support helps improve modernization and integration scenarios by
+   allowing COBOL and Java workloads to run together on a common, current Java runtime on z/OS.
+   (Compiling, linking, and running non-OO COBOL applications that interoperate with Java)
+
+Interoperability between AMODE 31 (31-bit) and AMODE 64 (64-bit) COBOL
+programs
+
+AMODE 64 (64-bit) COBOL applications can interoperate with your existing AMODE 31 (31-bit) COBOL
+applications. Dynamic call is supported in a mixed AMODE 31/AMODE 64 environment. (COBOL
+applications with mixed AMODE 31 and AMODE 64 programs)
+Runtime APAR PH59864 (V2R5 or later): When PTFs for LE APAR PH56800 and COBOL Runtime APAR
+PH59864 are installed on z/OS 2.5 or later systems where COBOL programs run, the AMODE 31
+subprograms called by the caller program can be either a DLL or a non-DLL. (Dynamic call between
+AMODE 31 and AMODE 64 programs)
+
+User-defined functions support
+
+You can define your own functions by specifying a FUNCTION-ID paragraph in the IDENTIFICATION
+DIVISION and invoke them by using a reference to a function identifier. This is part of the 2002 COBOL
+Standard.
+The following language elements are enhanced to provide the user-defined functions support:
+Function IDENTIFICATION DIVISION
+   For a user-defined function, the first paragraph of the IDENTIFICATION DIVISION must be the
+   FUNCTION-ID paragraph.
+   • IDENTIFICATION DIVISION
+   • FUNCTION-ID paragraph
+User-defined function configuration section
+   Specify the configuration section in the ENVIRONMENT DIVISION of a user-defined function
+   definition. (REPOSITORY paragraph)
+Function procedure division
+   The function procedure division consists of optional declaratives, and procedures that contain
+   sections, paragraphs, sentences, and statements.
+   • Procedure division structure
+   • The PROCEDURE DIVISION header
+   • USING phrase
+   • RETURNING phrase
+CONTENT-OF intrinsic function
+   The CONTENT-OF intrinsic function returns the content of the argument. The CONTENT-OF intrinsic
+   function is useful when you want to pass an argument to a user-defined function that is effectively BY
+   CONTENT. (CONTENT-OF)
+
+
+
+
+           Chapter 2. What is new in Enterprise COBOL for z/OS 6.4 and COBOL 6.4 with PTFs installed 5
+      Using user-defined functions
+         You can write your own function definitions that may be invoked by using the FUNCTION keyword.
+         (Using user-defined functions)
+
+      Function prototypes support
+
+      PH57397: With a function prototype, you can define the function name, parameters, and returning value
+      of a user-defined function or other non-COBOL external functions such as C functions and invoke these
+      functions. This is part of the 2014 COBOL Standard.
+      The following language elements are enhanced to provide the function prototypes support:
+      Function IDENTIFICATION DIVISION
+         For a function prototype, the first paragraph of the IDENTIFICATION DIVISION must be the
+         FUNCTION-ID paragraph.
+         • IDENTIFICATION DIVISION
+         • FUNCTION-ID paragraph
+      Function prototype procedure division
+         The function prototype procedure division consists only of the function prototype division header.
+         • Procedure division structure
+         • Format: function procedure division header
+         • USING phrase
+         • RETURNING phrase
+      Using function prototypes
+         You can use function prototypes to invoke COBOL user-defined functions. (Using function prototypes)
+
+      Enhanced UTF-8 support
+      PH48667: When you use the figurative constant HIGH-VALUE in a context that requires UTF-8 characters,
+      its value is UTF-8 character UX'F48FBFBF' corresponding to Unicode code point U+10FFFF, except when
+      HIGH-VALUE is used in a move or compare operation with a fixed byte-length UTF-8 data item that has a
+      length that is not a multiple of 4 bytes. (Using UTF-8-character figurative constants)
+      PH57297: You can use UTF-8 (PIC U) data items as the arguments to the STRING and UNSTRING
+      statements. (STRING statement and UNSTRING statement)
+      Note: COBOL Runtime LE APAR PH57264 (for AMODE 31) or APAR PH57265 (for AMODE 64) must also
+      be applied on all systems where programs that make use of this new feature are linked or run.
+      PH57400: You can use dynamic-length and UTF-8 (PIC U) data items as the arguments to the JSON
+      GENERATE and JSON PARSE statements. (JSON GENERATE statement and JSON PARSE statement)
+      Note: COBOL Runtime LE APAR PH57152 must also be applied on all systems where programs that make
+      use of this new feature are linked or run.
+
+      JSON enhancements
+      • PH57398: You can use the ENCODING phrase of the JSON GENERATE and JSON PARSE statements to
+        specify the encoding of the JSON document. (JSON GENERATE statement and JSON PARSE statement)
+        Note: COBOL Runtime LE APAR PH57152 must also be applied on all systems where programs that
+        make use of this new feature are linked or run.
+      • PH58384: You can use the NAME IS OMITTED phrase to parse an anonymous JSON array in addition to
+        an anonymous JSON object. (JSON GENERATE statement and JSON PARSE statement)
+      • PH59733: You can generate and parse JSON null values by using the JSON GENERATE and JSON
+        PARSE statements. (Generating JSON null values and Handling JSON null values)
+
+
+6 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+Improved integration with IBM Automatic Binary Optimizer for z/OS (ABO)
+
+COBOL modules that you compile today can be easily optimized in the future by ABO to utilize future IBM
+Z hardware enhancements, without having to be recompiled.
+• ABO (sold separately) improves the performance of already-compiled COBOL program modules without
+  recompiling, source code migration, or performance tuning.
+• With the new SMARTBIN compiler option in effect, COBOL compiler generates modules containing
+  additional binary metadata that enables them to be optimized by ABO 2.2. (SMARTBIN)
+• Use the latest version of Enterprise COBOL for new development, modernization, and maintenance.
+  Use ABO to improve the performance of COBOL modules that are stable and do not need any source
+  changes.
+For details about ABO, visit the ABO product page.
+
+Compiler option changes
+
+New compiler options
+   SMARTBIN
+      Use SMARTBIN to instruct the compiler to generate modules containing additional binary
+      metadata that enables them to be optimized by IBM Automatic Binary Optimizer (ABO) for z/OS
+      2.2 or higher. Use the SMARTBIN(NAMES) option to add information about names of user symbols
+      to the binary metadata to improve the analysis output of IBM watsonx Code Assistant for Z Code
+      Optimization Advice. (SMARTBIN)
+   JAVAIOP
+      Use JAVAIOP to control the behavior of COBOL programs that interoperate with Java through
+      the JAVA-CALLABLE or JAVA-SHAREABLE directives or by calling Java static methods using the
+      CALL statement. (JAVAIOP)
+   CONDCOMP
+      PH50296: CONDCOMP compiler option is introduced to control how conditional code will be
+      displayed in the listing. (CONDCOMP)
+   LSACHECK
+      PH64491: Use the LSACHECK option (LSACHECK is short for Linkage Section Addressability
+      Check) to prevent inadvertent use of LINKAGE-SECTION data items prior to establishing
+      addressability. This can prevent problems when migrating to z/OS 2.5 and later. (LSACHECK)
+Modified compiler options
+   ARCH
+      ARCH(8) and ARCH(9) are no longer accepted. A new higher level of ARCH(14) is accepted.
+      ARCH(10) is the default. (ARCH)
+   RULES
+      If there are multiple RULES specifications for a compilation, the suboptions are additive, which
+      means they are accumulated. (RULES)
+   TUNE
+      TUNE(8) and TUNE(9) are no longer accepted. A new higher level of TUNE(14) is accepted.
+      TUNE(10) is the default if ARCH is not specified. (TUNE)
+   NUMCHECK
+      The NUMCHECK compiler option is updated to avoid generating runtime checking code of zoned-
+      decimal senders in MOVE statements when the receiver is an alphanumeric data item and
+      NUMCHECK(ZON(LAX)) is in effect.
+       PH50295: The NUMCHECK compiler option is updated to avoid generating runtime checking code
+       of zoned decimal senders in MOVE statements when the receiver is an alphanumeric data item and
+       NUMCHECK(ZON(LAX))is in effect.(NUMCHECK)
+
+
+
+           Chapter 2. What is new in Enterprise COBOL for z/OS 6.4 and COBOL 6.4 with PTFs installed 7
+         ADATA
+            PH70961: The ADATA compiler option supports the EMBEDDED and SEPARATE suboptions to
+            control how SYSADATA information is handled. You can use these suboptions to specify whether
+            SYSADATA information is included as binary metadata in a NOLOAD section of the object program.
+            (ADATA)
+
+      Runtime changes
+      PERFORM … UNTIL EXIT support
+         You can specify EXIT in place of a condition in a PERFORM statement. If the UNTIL phrase with the
+         EXIT reserved word is specified, execution proceeds exactly as if the same PERFORM statement were
+         coded with condition-1 specified, except that condition-1 never evaluates as true. (PERFORM with
+         UNTIL phrase)
+      VSAM dynamic access optional logic path
+         PH56036 and PH56037: An optional alternate logic path is introduced for VSAM files that use the
+         ACCESS IS DYNAMIC mode. The alternate logic path uses a direct read-by-key request instead of a
+         point to a record by key. (VSAM dynamic access optional logic path)
+      New runtime options
+        PH56036 and PH56037: The following COBOL runtime options are added:
+         • VSAMDYNAMICDIR: Changes the dynamic access method of VSAM to a direct read-by-key request.
+           (VSAMDYNAMICDIR)
+         • DISABLEUOPTREPORT: Suppresses the COBOL runtime options report. (DISABLEUOPTREPORT)
+      Dynamic storage allocation
+         PH62425: When compiling and running programs containing COBOL code with the ALLOCATE
+         statement, where data-name-2 references a USAGE POINTER-32 data item, and the LP(64)
+         compiler option in effect, the compiler will issue the diagnostic message IGYPA3441-S when LOC
+         64 is specified, or allocate storage below the 2 GB bar when LOC 64 is not specified. (ALLOCATE
+         statement)
+
+      Debugging enhancement
+      With COBOL 6.4 at the base level, you can use ddname IGZPROUT at the run step of your JCL to generate
+      a report of all dynamically called programs that are compiled with Enterprise COBOL 5 or later releases.
+      With the COBOL runtime PTF for APAR PH61133 installed, the report contains COBOL 5 or later programs
+      that are called dynamically, statically, and via DLL linkage. (Generating a report of dynamically called
+      COBOL programs)
+
+      Usability enhancement
+      PH56142: When compiling under z/OS UNIX, you can use the cob2 -M option to generate a make
+      dependency file, file.u. This file contains entries for each copybook file that resides in a z/OS UNIX file
+      system and is referenced in your COBOL source file. (cob2 syntax and options)
+
+      Compiler message changes
+
+      New messages
+         • IGYCB7035-S: FPR save area offset limit(4095) exceeded (FASTLINK limitation). Offset is &1.
+           Reduce incoming parameter size in function &2. (IGYCB7035-S)
+         • IGYCB7155-U: Register \"&1\" is reserved by the compiler and cannot be used in the code.
+           (IGYCB7155-U)
+         • IGYCB7301-W: A zero base was raised to a zero power in a numeric literal exponentiation. The
+           result was set to 1. (IGYCB7301-W)
+
+
+
+
+8 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+   • IGYCB7302-W: A zero base was raised to a negative power in a numeric literal exponentiation. The
+     result was set to 0. (IGYCB7302-W)
+   • IGYCB7305-U: The COBOL-specific run time library was not available at compile time. Please add
+     SCEERUN to the concatenation for the compile step. (IGYCB7305-U)
+   • IGYCB7319-S: The target FUNCTION-POINTER or PROCEDURE-POINTER in the CALL statement on
+     line &1 is NULL. (IGYCB7319-S)
+Changed messages
+   • IGYCB7314-E: The value of data item &1 at statement number &2 on line &3 was invalid. The value
+     exceeded the number of digits in the data definition, and failed the SIZE ERROR test generated by
+     the NUMCHECK(BIN) compiler option. (IGYCB7314-E)
+
+Prefer video?
+To get a quick overview of the major new features and enhancements in Enterprise COBOL for z/OS 6.4,
+watch the Chapter 1, “Video: What is new in Enterprise COBOL for z/OS 6.4,” on page 1.
+
+
+
+
+           Chapter 2. What is new in Enterprise COBOL for z/OS 6.4 and COBOL 6.4 with PTFs installed 9
+10 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+Notices
+      This information was developed for products and services offered in the U.S.A.
+      IBM may not offer the products, services, or features discussed in this document in other countries.
+      Consult your local IBM representative for information on the products and services currently available in
+      your area. Any reference to an IBM product, program, or service is not intended to state or imply that
+      only that IBM product, program, or service may be used. Any functionally equivalent product, program, or
+      service that does not infringe any IBM intellectual property right may be used instead. However, it is the
+      user's responsibility to evaluate and verify the operation of any non-IBM product, program, or service.
+      IBM may have patents or pending patent applications covering subject matter described in this
+      document. The furnishing of this document does not give you any license to these patents. You can
+      send license inquiries, in writing, to:
+
+      IBM Director of Licensing
+      IBM Corporation
+      North Castle Drive, MD-NC119
+      Armonk, NY 10504-1785
+      U.S.A.
+
+      For license inquiries regarding double-byte (DBCS) information, contact the IBM Intellectual Property
+      Department in your country or send inquiries, in writing, to:
+
+      Intellectual Property Licensing
+      Legal and Intellectual Property Law
+      IBM Japan, Ltd.
+      19-21, Nihonbashi-Hakozakicho, Chuo-ku
+      Tokyo 103-8510, Japan
+
+      The following paragraph does not apply to the United Kingdom or any other country where such
+      provisions are inconsistent with local law: INTERNATIONAL BUSINESS MACHINES CORPORATION
+      PROVIDES THIS PUBLICATION "AS IS" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR
+      IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF NON-INFRINGEMENT,
+      MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. Some states do not allow disclaimer of
+      express or implied warranties in certain transactions, therefore, this statement may not apply to you.
+      This information could include technical inaccuracies or typographical errors. Changes are periodically
+      made to the information herein; these changes will be incorporated in new editions of the publication.
+      IBM may make improvements and/or changes in the product(s) and/or the program(s) described in this
+      publication at any time without notice.
+      Any references in this information to non-IBM websites are provided for convenience only and do not in
+      any manner serve as an endorsement of those websites. The materials at those websites are not part of
+      the materials for this IBM product and use of those websites is at your own risk.
+      IBM may use or distribute any of the information you supply in any way it believes appropriate without
+      incurring any obligation to you.
+      Licensees of this program who want to have information about it for the purpose of enabling: (i) the
+      exchange of information between independently created programs and other programs (including this
+      one) and (ii) the mutual use of the information which has been exchanged, should contact:
+
+      IBM Director of Licensing
+      IBM Corporation
+      North Castle Drive, MD-NC119
+      Armonk, NY 10504-1785
+      U.S.A.
+
+
+
+© Copyright IBM Corp. 2022, 2026                                                                                11
+     Such information may be available, subject to appropriate terms and conditions, including in some cases,
+     payment of a fee.
+     The licensed program described in this document and all licensed material available for it are provided by
+     IBM under terms of the IBM Customer Agreement, IBM International Program License Agreement or any
+     equivalent agreement between us.
+     Any performance data contained herein was determined in a controlled environment. Therefore, the
+     results obtained in other operating environments may vary significantly. Some measurements may have
+     been made on development-level systems and there is no guarantee that these measurements will be
+     the same on generally available systems. Furthermore, some measurements may have been estimated
+     through extrapolation. Actual results may vary. Users of this document should verify the applicable data
+     for their specific environment.
+     Information concerning non-IBM products was obtained from the suppliers of those products, their
+     published announcements or other publicly available sources. IBM has not tested those products and
+     cannot confirm the accuracy of performance, compatibility or any other claims related to non-IBM
+     products. Questions on the capabilities of non-IBM products should be addressed to the suppliers of
+     those products.
+     All statements regarding IBM's future direction or intent are subject to change or withdrawal without
+     notice, and represent goals and objectives only.
+     This information contains examples of data and reports used in daily business operations. To illustrate
+     them as completely as possible, the examples include the names of individuals, companies, brands, and
+     products. All of these names are fictitious and any similarity to the names and addresses used by an
+     actual business enterprise is entirely coincidental.
+     COPYRIGHT LICENSE:
+     This information contains sample application programs in source language, which illustrates programming
+     techniques on various operating platforms. You may copy, modify, and distribute these sample programs
+     in any form without payment to IBM, for the purposes of developing, using, marketing or distributing
+     application programs conforming to the application programming interface for the operating platform
+     for which the sample programs are written. These examples have not been thoroughly tested under
+     all conditions. IBM, therefore, cannot guarantee or imply reliability, serviceability, or function of these
+     programs. The sample programs are provided "AS IS", without warranty of any kind. IBM shall not be
+     liable for any damages arising out of your use of the sample programs.
+     Each copy or any portion of these sample programs or any derivative work, must include a copyright
+     notice as follows:
+     © (your company name) (year). Portions of this code are derived from IBM Corp. Sample Programs. ©
+     Copyright IBM Corp. 1991, 2020.
+     PRIVACY POLICY CONSIDERATIONS:
+     IBM Software products, including software as a service solutions, ("Software Offerings") may use cookies
+     or other technologies to collect product usage information, to help improve the end user experience, or
+     to tailor interactions with the end user, or for other purposes. In many cases no personally identifiable
+     information is collected by the Software Offerings. Some of our Software Offerings can help enable you
+     to collect personally identifiable information. If this Software Offering uses cookies to collect personally
+     identifiable information, specific information about this offering's use of cookies is set forth below.
+     This Software Offering does not use cookies or other technologies to collect personally identifiable
+     information.
+     If the configurations deployed for this Software Offering provide you as customer the ability to collect
+     personally identifiable information from end users via cookies and other technologies, you should seek
+     your own legal advice about any laws applicable to such data collection, including any requirements for
+     notice and consent.
+     For more information about the use of various technologies, including cookies, for these purposes,
+     see IBM's Privacy Policy at http://www.ibm.com/privacy and IBM's Online Privacy Statement at http://
+     www.ibm.com/privacy/details in the section entitled "Cookies, Web Beacons and Other Technologies,"
+
+12 Notices
+   and the "IBM Software Products and Software-as-a-Service Privacy Statement" at http://www.ibm.com/
+   software/info/product-privacy.
+
+Trademarks
+   IBM, the IBM logo, and ibm.com® are trademarks or registered trademarks of International Business
+   Machines Corp., registered in many jurisdictions worldwide. Other product and service names might be
+   trademarks of IBM or other companies. A current list of IBM trademarks is available on the Web at
+   “Copyright and trademark information” at www.ibm.com/legal/copytrade.shtml.
+   Other company, product, or service names may be trademarks or service marks of others.
+
+
+
+
+                                                                                               Notices 13
+14 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+Enterprise COBOL for z/OS publications
+      COBOL for z/OS publications
+      You can find the following publications in the Enterprise COBOL for z/OS library:
+      • What's new
+      • Customization Guide, SC27-8712-02
+      • Language Reference, SC27-8713-02
+      • Programming Guide, SC27-8714-02
+      • Migration Guide, GC27-8715-02
+      • Performance Tuning Guide, SC27-9202-01
+      • Messages and Codes, SC27-4648-01
+      • Program Directory, GI13-4526-02
+      • Licensed Program Specifications, GI13-4532-02
+
+      Softcopy publications
+      The following collection kits contain Enterprise COBOL and other product publications. You can find them
+      at http://www.ibm.com/e-business/linkweb/publications/servlet/pbi.wss.
+      • z/OS Software Products Collection
+      • z/OS and Software Products DVD Collection
+
+      Support
+
+      If you have a problem using Enterprise COBOL for z/OS, see the following site that provides
+      up-to-date support information: https://www.ibm.com/support/home/product/B984385H82239E03/
+      Enterprise_COBOL_for_z/OS.
+
+
+
+
+© Copyright IBM Corp. 2022, 2026                                                                            15
+16 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+Index
+
+A                                      reader comments (continued)
+                                           sending vii
+about this information v
+AMODE 31/AMODE 64 interoperability 5
+                                       S
+B                                      support 15
+
+Bibliography 15
+                                       U
+C                                      user-defined functions 5, 6
+
+comments
+    sending vii
+compiler messages 8
+compiler options
+    ARCH 7
+    JAVAIOP 7
+    NUMCHECK 7
+    SMARTBIN 7
+    TUNE 7
+customer support 15
+
+
+E
+enhancements 3
+
+
+F
+feedback
+    sending vii
+
+
+J
+Java/COBOL interoperability 4
+
+
+L
+List of resources 15
+
+
+N
+new features 3
+Notices 11
+
+
+P
+PERFORM UNTIL EXIT
+    PERFORM with UNTIL phrase 8
+product support 15
+
+
+R
+RCFs
+    sending vii
+reader comments
+
+
+                                                                     Index 17
+18 Enterprise COBOL for z/OS: Enterprise COBOL for z/OS, 6.4 What's New
+IBM®
+
+Product Number: 5655-EC6
+
+
+
+
+SC31-5708-00
+
