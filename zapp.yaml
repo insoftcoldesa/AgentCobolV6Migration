@@ -1,0 +1,76 @@
+# ZAPP - Configuracion de IBM Z Open Editor
+#
+# Le dice al editor donde buscar los copybooks que los programas
+# referencian con COPY. Sin este archivo, el editor marca en rojo
+# todo lo que venga de un copybook aunque el codigo este bien.
+#
+# Va en la RAIZ del repositorio de FUENTES clonado (bancoavvillas),
+# no en el del agente. Se versiona en Git: todo el equipo lo hereda.
+#
+# Las bibliotecas MVS de abajo replican el orden real del SYSLIB del
+# procedimiento K62BATD, verificado en el spool del job de compilacion.
+# El orden importa: la primera coincidencia gana, igual que en la
+# compilacion real.
+
+propertyGroups:
+
+  # ---------------------------------------------------------------
+  # Programas COBOL batch
+  # ---------------------------------------------------------------
+  - name: cobol-batch
+    language: cobol
+    libraries:
+
+      # syslib es el nombre reservado para los COPY sin biblioteca
+      # explicita, que son la mayoria:  COPY SOY310.
+      - name: syslib
+        type: local
+        locations:
+          # AJUSTAR a la estructura real del clon.
+          # Preferir rutas especificas sobre patrones con ** : en un
+          # repositorio grande la busqueda se vuelve lenta.
+          - "AV00/COPYLIB"
+          - "bavv-gd-zos/AV00/COPYLIB"
+
+      # Respaldo remoto, en el MISMO orden que el SYSLIB real.
+      # Solo se consulta si el copybook no aparece localmente.
+      # Si uno resuelve por aqui y no en local, hay desviacion entre
+      # el repositorio y el host: reportarla al lider tecnico.
+      - name: syslib
+        type: mvs
+        locations:
+          - DESA.AV01.BATCHLIB
+          - DESA.AV01.COPYLIB
+          - PROD.AV00.COPYLIB
+
+  # ---------------------------------------------------------------
+  # Programas COBOL CICS
+  # ---------------------------------------------------------------
+  - name: cobol-cics
+    language: cobol
+    libraries:
+      - name: syslib
+        type: local
+        locations:
+          - "AV00/COPYLIB"
+          - "AV00/MAPCLIB"
+      - name: syslib
+        type: mvs
+        locations:
+          - DESA.AV01.CICSLIB
+          - DESA.AV01.COPYLIB
+          - DESA.AV01.MAPCLIB
+          - TEST.AV00.COPYLIB
+          - TEST.AV00.MAPCLIB
+          - PROD.AV00.COPYLIB
+
+  # ---------------------------------------------------------------
+  # JCL
+  # ---------------------------------------------------------------
+  - name: jcl-proclibs
+    language: jcl
+    libraries:
+      # Sin el campo locations, los procedimientos se resuelven
+      # usando los datasets que el propio archivo JCL declara.
+      - name: proclib
+        type: mvs
